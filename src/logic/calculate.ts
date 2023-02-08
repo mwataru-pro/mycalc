@@ -79,7 +79,7 @@ function handleOperatorButton(button: string, state: State) {
   }
   const nextValue = operate(state)
   return {
-    current: '${nextValue}',
+    current: `${nextValue}`,
     operand: nextValue,
     operator: button,
     isNextClear: true
@@ -143,9 +143,9 @@ function handleEqualButton(state: State): State{
   if (state.operator === null) {
     return state
   }
-  const nextValue = operate(state);
+  const nextValue = operate(state)
   return {
-    current: '${nextValue}',
+    current: `${nextValue}`,
     operand: 0,
     operator: null,
     isNextClear: true
