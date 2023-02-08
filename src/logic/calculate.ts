@@ -5,8 +5,8 @@ export function calculate(button: string, state: State) {
     return handleNumberButton(button, state)
   }
   // オペレーターかどうか
-  if (isOperatorBuuton(buuton)) {
-
+  if (isOperatorButton(button)) {
+    return handleOperatorButton(button, state)
   }
   // .かどうか
   if (isDottoButton(button)) {
@@ -62,5 +62,26 @@ function handleNumberButton(button: string, state: State) {
     operand: state.operand,
     operator: state.operator,
     isNextClear: false
+  }
+}
+function isOperatorButton(button: string) {
+  return button === "+" || button === "-";
+}
+
+function handleOperatorButton(button: string, state: State) {
+  if (state.operator === null) {
+    return {
+      current: state.current,
+      operand: parseFloat(state.current),
+      operator: button,
+      isNextClear: true
+    }
+  }
+  const nextValue = operate(state)
+  return {
+    current: '${nextValue}',
+    operand: nextValue,
+    operator: button,
+    isNextClear: true
   }
 }
