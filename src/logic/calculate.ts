@@ -21,8 +21,8 @@ export function calculate(button: string, state: State) {
     return handleAllClearButton()
   }
   // ＝ かどうか
-  if (isFinishedCalculateButton(button)) {
-
+  if (isEqualButton(button)) {
+    return handleEqualButton(state)
   }
   return state;
 }
@@ -134,4 +134,31 @@ function handleAllClearButton(): State{
     operator: null,
     isNextClear: false
   }
+}
+function isEqualButton(button: string) {
+  return button === "="
+}
+
+function handleEqualButton(state: State): State{
+  if (state.operator === null) {
+    return state
+  }
+  const nextValue = operate(state);
+  return {
+    current: '${nextValue}',
+    operand: 0,
+    operator: null,
+    isNextClear: true
+  }
+}
+
+function operate(state: State): number {
+  const current = parseFloat(state.current)
+  if (state.operator === "+") {
+    return state.operand + current
+  }
+  if (state.operator === "-") {
+    return state.operand - current
+  }
+  return current;
 }
