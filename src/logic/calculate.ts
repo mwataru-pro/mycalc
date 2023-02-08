@@ -9,8 +9,8 @@ export function calculate(button: string, state: State) {
     return handleOperatorButton(button, state)
   }
   // .かどうか
-  if (isDottoButton(button)) {
-
+  if (isDotButton(button)) {
+    return handleDotButton(state)
   }
   // 削除ボタンかどうか
   if (isDeleteButton(button)) {
@@ -83,5 +83,21 @@ function handleOperatorButton(button: string, state: State) {
     operand: nextValue,
     operator: button,
     isNextClear: true
+  }
+}
+
+function isDotButton(button: string) {
+  return button === "."
+}
+
+function handleDotButton(state: State): State {
+  if (state.current.indexOf('.') !== -1) {
+    return state
+  }
+  return {
+    current: state.current + ".",
+    operand: state.operand,
+    operator: state.operator,
+    isNextClear: false
   }
 }
