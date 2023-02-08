@@ -14,11 +14,11 @@ export function calculate(button: string, state: State) {
   }
   // 削除ボタンかどうか
   if (isDeleteButton(button)) {
-
+    return handleDeleteButton(state)
   }
   // ACかどうか
-  if (isAllCleartButton(button)) {
-
+  if (isAllClearButton(button)) {
+    return handleAllClearButton()
   }
   // ＝ かどうか
   if (isFinishedCalculateButton(button)) {
@@ -98,6 +98,40 @@ function handleDotButton(state: State): State {
     current: state.current + ".",
     operand: state.operand,
     operator: state.operator,
+    isNextClear: false
+  }
+}
+
+function isDeleteButton(button: string) {
+  return button === "D"
+}
+
+function handleDeleteButton(state: State): State {
+  if (state.current.length === -1) {
+    return {
+      current: "0",
+      operand: state.operand,
+      operator: state.operator,
+      isNextClear: false
+    }
+  }
+  return {
+    current: state.current.substring(0, state.current.length - 1),
+    operand: state.operand,
+    operator: state.operator,
+    isNextClear: false
+  }
+}
+
+function isAllClearButton(button: string) {
+  return button === "AC"
+}
+
+function handleAllClearButton(): State{
+  return {
+    current: "0",
+    operand: 0,
+    operator: null,
     isNextClear: false
   }
 }
